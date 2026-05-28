@@ -26,19 +26,16 @@ public class GrupoService {
     private final GrupoRepository grupoRepository;
     private  final UsuarioRepository usuarioRepository;
     private final MembrosGroupRepository membrosGroupRepository;
-    private MembroMapper membroMapper;
+    private  final MembroMapper membroMapper;
 
 
     @Transactional
     public GrupoResponseDto criarGrupo(GrupoRequestDto dto,UUID id){
         Usuarios usuarios = usuarioRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("id não pode ser null"));
-        Grupo grupo =  grupoMapper.toEntity(dto);
+        Grupo grupo =  new Grupo();
+        grupo.setNomeGrupo(dto.nomeGrupo());
+        grupo.setCriador(usuarios);
         var salvar = grupoRepository.save(grupo);
-
-        MembrosGrup membro = new MembrosGrup();
-        membro.setGrupo(grupo);
-        membro.setUsuario(usuarios);
-        membro.setCargo(Cargo.ADMIN);
         return grupoMapper.toDto(salvar);
     }
 
@@ -63,5 +60,5 @@ public class GrupoService {
 
     }
 
-    public
+
 }
