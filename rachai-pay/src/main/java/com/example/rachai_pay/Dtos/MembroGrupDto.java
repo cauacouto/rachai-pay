@@ -3,10 +3,12 @@ package com.example.rachai_pay.Dtos;
 import com.example.rachai_pay.Enum.Cargo;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record MembroGrupDto(
-        String usuarioId,
-        String grupoId,
+        UUID usuarioId,
+        Long grupoId,
+        String nomeGrupo,
         Cargo cargo,
         LocalDateTime dataEntrada
 ){}
