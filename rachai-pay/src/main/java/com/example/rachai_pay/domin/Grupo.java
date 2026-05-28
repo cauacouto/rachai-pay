@@ -1,5 +1,6 @@
 package com.example.rachai_pay.domin;
 
+import com.example.rachai_pay.Enum.Cargo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,9 @@ public class Grupo {
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime criadoEm;
+
+    @Enumerated(EnumType.STRING)
+    private Cargo cargo = Cargo.ADMIN;
 
 
     @PrePersist
