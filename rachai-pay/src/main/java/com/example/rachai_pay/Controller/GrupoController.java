@@ -26,9 +26,9 @@ public class GrupoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(request);
     }
 
-    @PostMapping("/{grupoId}/membros/{usuarioId}")
-    public ResponseEntity<MembroGrupDto> adicionarMembros(@PathVariable UUID usuarioId,@PathVariable Long grupoId){
-        grupoService.adicionarMembros(grupoId,usuarioId);
-        return ResponseEntity.ok().build();
+        @PostMapping("/{grupoId}/membros/{usuarioId}")
+        public ResponseEntity<MembroGrupDto> adicionarMembros(@PathVariable Long grupoId,@PathVariable UUID usuarioId){
+           var result = grupoService.adicionarMembros(grupoId,usuarioId);
+            return ResponseEntity.ok().body(result);
+        }
     }
-}
