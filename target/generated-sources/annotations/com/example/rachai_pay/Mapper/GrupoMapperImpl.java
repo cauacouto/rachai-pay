@@ -1,7 +1,7 @@
 package com.example.rachai_pay.Mapper;
 
-import com.example.rachai_pay.Dtos.GrupoRequestDto;
 import com.example.rachai_pay.Dtos.GrupoResponseDto;
+import com.example.rachai_pay.Enum.Cargo;
 import com.example.rachai_pay.domin.Grupo;
 import com.example.rachai_pay.domin.Usuarios;
 import java.time.LocalDateTime;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-26T10:35:29-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Oracle Corporation)"
+    date = "2026-05-27T22:25:28-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.10 (Ubuntu)"
 )
 @Component
 public class GrupoMapperImpl implements GrupoMapper {
@@ -24,33 +24,22 @@ public class GrupoMapperImpl implements GrupoMapper {
         }
 
         UUID criadorId = null;
-        String nome = null;
-        Integer id = null;
         String nomeGrupo = null;
+        String nome = null;
+        Cargo cargo = null;
+        Integer id = null;
         LocalDateTime criadoEm = null;
 
         criadorId = entityCriadorId( entity );
-        nome = entityCriadorNome( entity );
-        id = entity.getId();
         nomeGrupo = entity.getNomeGrupo();
+        nome = entityCriadorNome( entity );
+        cargo = entity.getCargo();
+        id = entity.getId();
         criadoEm = entity.getCriadoEm();
 
-        GrupoResponseDto grupoResponseDto = new GrupoResponseDto( id, nomeGrupo, criadoEm, criadorId, nome );
+        GrupoResponseDto grupoResponseDto = new GrupoResponseDto( id, nomeGrupo, criadoEm, criadorId, nome, cargo );
 
         return grupoResponseDto;
-    }
-
-    @Override
-    public Grupo toEntity(GrupoRequestDto response) {
-        if ( response == null ) {
-            return null;
-        }
-
-        Grupo grupo = new Grupo();
-
-        grupo.setNomeGrupo( response.nomeGrupo() );
-
-        return grupo;
     }
 
     private UUID entityCriadorId(Grupo grupo) {
