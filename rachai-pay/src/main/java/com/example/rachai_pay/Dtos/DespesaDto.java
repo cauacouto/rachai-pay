@@ -6,8 +6,8 @@ public record DespesaDto(
         String nomeDespesa,
         BigDecimal valor,
         int quantidadeMembros,
-        Long grupoID,
-        BigDecimal valorPorPessoa
+        Long grupoID
+
 
 ) {
 }
