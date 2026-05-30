@@ -1,14 +1,15 @@
 package com.example.rachai_pay.Service;
 
-import com.example.rachai_pay.Dtos.GrupoRequestDto;
-import com.example.rachai_pay.Dtos.GrupoResponseDto;
-import com.example.rachai_pay.Dtos.MembroGrupDto;
+import com.example.rachai_pay.Dtos.*;
 import com.example.rachai_pay.Enum.Cargo;
+import com.example.rachai_pay.Mapper.DespesaMapper;
 import com.example.rachai_pay.Mapper.GrupoMapper;
 import com.example.rachai_pay.Mapper.MembroMapper;
+import com.example.rachai_pay.Repository.DespesaRepository;
 import com.example.rachai_pay.Repository.GrupoRepository;
 import com.example.rachai_pay.Repository.MembrosGroupRepository;
 import com.example.rachai_pay.Repository.UsuarioRepository;
+import com.example.rachai_pay.domin.Despesa;
 import com.example.rachai_pay.domin.Grupo;
 import com.example.rachai_pay.domin.MembrosGrup;
 import com.example.rachai_pay.domin.Usuarios;
@@ -27,6 +28,8 @@ public class GrupoService {
     private  final UsuarioRepository usuarioRepository;
     private final MembrosGroupRepository membrosGroupRepository;
     private  final MembroMapper membroMapper;
+    private  final DespesaRepository despesaRepository;
+    private  final DespesaMapper despesaMapper;
 
 
     @Transactional
@@ -59,6 +62,28 @@ public class GrupoService {
 
 
     }
+
+    public DespesaResponseDto criarDepesa (DespesaDto dto, Long id){
+
+        Grupo grupo = grupoRepository.findById(id).orElseThrow(()-> new RuntimeException("grupo não encontrado"));
+
+        Despesa despesa = new Despesa();
+        despesa.setNomeDespesa(dto.nomeDespesa());
+        despesa.setValor(dto.valor());
+        despesa.setQuantidadeMmebros(dto.quantidadeMembros());
+        despesa.setGrupo(grupo);
+
+        Despesa despesaSalva = despesaRepository.save(despesa);
+
+        return despesaMapper.toDto(despesaSalva);
+
+
+
+
+
+
+    }
+
 
 
 }
