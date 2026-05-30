@@ -3,16 +3,18 @@ package com.example.rachai_pay.domin;
 import com.example.rachai_pay.Enum.Cargo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "DB_GRUPO")
-@Data
+@Getter
+@Setter
+@ToString(exclude = "despesas")
+@EqualsAndHashCode(exclude = "despesas")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Grupo {
@@ -39,6 +41,9 @@ public class Grupo {
 
     @Enumerated(EnumType.STRING)
     private Cargo cargo = Cargo.ADMIN;
+
+    @OneToMany(mappedBy = "grupo")
+    private List<Despesa> despesas;
 
 
     @PrePersist
