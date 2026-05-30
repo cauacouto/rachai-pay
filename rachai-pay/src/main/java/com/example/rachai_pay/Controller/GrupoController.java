@@ -1,14 +1,13 @@
 package com.example.rachai_pay.Controller;
 
-import com.example.rachai_pay.Dtos.GrupoRequestDto;
-import com.example.rachai_pay.Dtos.GrupoResponseDto;
-import com.example.rachai_pay.Dtos.MembroGrupDto;
+import com.example.rachai_pay.Dtos.*;
 import com.example.rachai_pay.Service.GrupoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,4 +30,16 @@ public class GrupoController {
            var result = grupoService.adicionarMembros(grupoId,usuarioId);
             return ResponseEntity.ok().body(result);
         }
+
+        @PostMapping("/{id}/despesa")
+        public ResponseEntity<DespesaResponseDto> criarDespesa(@RequestBody DespesaDto dto,@PathVariable Long id){
+        var DespesaCriada = grupoService.criarDepesa(dto, id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(DespesaCriada);
+        }
+
+    @GetMapping("/{grupoId}/membros")
+    public ResponseEntity<List<MembroGrupDto>> listarMembros(@PathVariable Long grupoId) {
+        List<MembroGrupDto> membros = grupoService.listar(grupoId);
+        return ResponseEntity.ok(membros);
+    }
     }
