@@ -17,7 +17,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +58,9 @@ public class GrupoService {
         membrosGrup.setGrupo(grupo);
         membrosGrup.setUsuario(usuarios);
         membrosGrup.setCargo(Cargo.MEMBRO);
+
+        grupo.getMembros().add(membrosGrup);
+
         var salva = membrosGroupRepository.save(membrosGrup);
         return membroMapper.toDto(salva);
 
@@ -67,23 +72,27 @@ public class GrupoService {
 
         Grupo grupo = grupoRepository.findById(id).orElseThrow(()-> new RuntimeException("grupo não encontrado"));
 
+        if (grupo.getMembros() == null || grupo.getMembros().isEmpty()){
+            throw  new RuntimeException("Não é possivel criar despesa em um grupo sem membros");
+        }
+
         Despesa despesa = new Despesa();
         despesa.setNomeDespesa(dto.nomeDespesa());
         despesa.setValor(dto.valor());
         despesa.setQuantidadeMmebros(dto.quantidadeMembros());
         despesa.setGrupo(grupo);
-
         Despesa despesaSalva = despesaRepository.save(despesa);
-
         return despesaMapper.toDto(despesaSalva);
-
-
-
-
-
 
     }
 
+    public List<MembroGrupDto> listar(Long idGrupo){
+       Grupo grupo =  grupoRepository.findById(idGrupo).orElseThrow(()-> new RuntimeException("grupo nao encontrado"));
+        return grupo.getMembros().stream()
+                .map(membroMapper::toDto)
+                .collect(Collectors.toList());
 
+
+    }
 
 }
