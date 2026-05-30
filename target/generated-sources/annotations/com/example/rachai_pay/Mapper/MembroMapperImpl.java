@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-27T22:38:00-0300",
+    date = "2026-05-29T22:27:19-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.10 (Ubuntu)"
 )
 @Component
@@ -37,7 +37,9 @@ public class MembroMapperImpl implements MembroMapper {
         cargo = entity.getCargo();
         dataEntrada = entity.getDataEntrada();
 
-        MembroGrupDto membroGrupDto = new MembroGrupDto( usuarioId, grupoId, cargo, dataEntrada );
+        String nomeGrupo = null;
+
+        MembroGrupDto membroGrupDto = new MembroGrupDto( usuarioId, grupoId, nomeGrupo, cargo, dataEntrada );
 
         return membroGrupDto;
     }
