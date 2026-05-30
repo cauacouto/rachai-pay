@@ -32,8 +32,7 @@ public class Grupo {
     @JoinColumn(name = "criador_Id")
     private Usuarios criador;
 
-    @OneToMany(mappedBy = "grupo")
-
+    @OneToMany(mappedBy = "grupo",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<MembrosGrup> membros;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
